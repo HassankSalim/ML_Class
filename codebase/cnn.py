@@ -9,7 +9,7 @@ Project: https://github.com/aymericdamien/TensorFlow-Examples/
 from __future__ import print_function
 
 import tensorflow as tf
-
+import os
 # Import MNIST data
 from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets("../data/", one_hot=True)
@@ -112,7 +112,8 @@ saver = tf.train.Saver()
 with tf.Session() as sess:
     sess.run(init)
     step = 1
-    saver.restore(sess, model_path)
+    if os.path.exists(model_path):
+        saver.restore(sess, model_path)
     # Keep training until reach max iterations
     while step * batch_size < training_iters:
         batch_x, batch_y = mnist.train.next_batch(batch_size)
